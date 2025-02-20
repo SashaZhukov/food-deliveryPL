@@ -1,0 +1,52 @@
+services:
+  laravel:
+    build:
+      context: ./laravel
+      dockerfile: Dockerfile
+    container_name: laravel
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./laravel:/var/www
+    ports:
+      - "8080:8080"
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: laravel-db
+      DB_PORT: 5432
+      DB_DATABASE: food-delivery-laravel-db
+      DB_USERNAME: postgres
+      DB_PASSWORD: 123ABC
+    links:
+      - laravel-db
+
+
+  laravel-db:
+    image: postgres:16-alpine
+    container_name: laravel-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: food-delivery-laravel-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123ABC
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata-laravel:/var/lib/postgresql/data
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: react
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    links:
+      - laravel
+
+volumes:
+  pgdata-laravel:
