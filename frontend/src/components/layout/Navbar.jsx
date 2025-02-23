@@ -12,10 +12,10 @@ export default function Navbar() {
     const { user, loading } = useAuth();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    if (loading) return null; // Пока данные загружаются, ничего не рендерим
+    if (loading) return null;
 
     return (
-        <nav className="bg-white p-6 shadow-md">
+        <nav className="bg-white p-6 shadow-lg">
             <div className="flex items-center space-x-6 justify-between">
                 <div>
                     <Link href="/" className="font-bold text-green-500 text-4xl">
