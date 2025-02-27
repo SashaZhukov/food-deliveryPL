@@ -1,45 +1,19 @@
 import '../globals.css';
-import { cookies } from 'next/headers';
-import config from "../../config";
 import { IoArrowBack } from "react-icons/io5";
 import Link from "next/link";
 import React from "react";
-import {redirect} from "next/navigation";
 import ProfileContent from "../../components/profile/ProfileContent";
+import {getUser} from "../../utils/getUser";
+import {redirect} from "next/navigation";
 
 export default async function Page() {
-    const cookieStore = await cookies();
-    const token = cookieStore.get('auth-token')?.value;
 
-    if (!token) {
+    const user = await getUser();
+
+    if (!user) {
+        console.error('User is null, redirecting to home page.');
         redirect('/');
     }
-
-    let user = null;
-
-
-    try {
-        const res = await fetch(`${config.API_URL}/api/user`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            credentials: 'include',
-            cache: 'no-store'
-        });
-
-        if (res.ok) {
-            user = await res.json();
-        } else {
-            redirect('/')
-        }
-    } catch (error) {
-        console.error('', error);
-        redirect('/');
-    }
-
 
     return (
         <div className="px-48 bg-custom-gray h-full min-h-screen">
@@ -66,6 +40,5 @@ export default async function Page() {
             </div>
         </div>
     )
-
 }
 

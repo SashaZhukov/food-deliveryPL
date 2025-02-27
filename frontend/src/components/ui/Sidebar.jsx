@@ -1,5 +1,3 @@
-"use client";
-
 import {FaAddressCard, FaRegUserCircle} from "react-icons/fa";
 import {IoHome} from "react-icons/io5";
 import {MdErrorOutline, MdOutlineCardGiftcard, MdOutlinePayment} from "react-icons/md";
