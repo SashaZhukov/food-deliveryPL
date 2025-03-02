@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import '../globals.css'
 import AdminSidebar from "../../components/admin/AdminSidebar";
-import AdminNavHeader from "../../components/admin/AdminNavHeader";
+import HeaderWrapper from "../../utils/HeaderWrapper";
 
 const inter = Inter({
     weight: ['400', '500', '600'],
@@ -15,12 +15,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     return (
-         <div className="flex flex-row bg-custom-gray h-screen">
-             <AdminSidebar/>
-             <div className="mt-4 flex-1">
-                 <AdminNavHeader />
-                 {children}
-             </div>
-         </div>
+        <div className="flex flex-row bg-custom-gray h-screen">
+            <AdminSidebar/>
+            <div className="flex-1">
+                <HeaderWrapper />
+                {children}
+            </div>
+        </div>
     );
 }

@@ -2,7 +2,6 @@ import {getUser} from "../../../utils/getUser";
 import Link from "next/link";
 import {redirect} from "next/navigation";
 import config from "../../../config";
-import {it} from "node:test";
 
 
 export default async function Page() {
@@ -34,7 +33,7 @@ export default async function Page() {
             <div className="flex items-center mx-24 px-6 py-6 bg-green-500 rounded-lg relative">
                 <div className="text-xl text-white">Users list</div>
                 <button className="ml-auto text-white border border-white py-1 px-2 rounded-lg transition-transform duration-300 hover:scale-105">
-                    <Link href="">Create user</Link>
+                    <Link href="/admin/users/create">Create user</Link>
                 </button>
             </div>
             <div className="bg-white py-9 -mt-12 mx-16 rounded-t-lg"></div>

@@ -10,7 +10,7 @@ import {usePathname} from "next/navigation";
 export default function AdminSidebar() {
     const pathname = usePathname();
 
-    const isActive = (path) => pathname === path ? 'bg-green-500 text-white' : 'border border-transparent hover:border-gray-800'
+    const isActive = (path) => pathname.startsWith(path) ? 'bg-green-500 text-white' : 'border border-transparent hover:border-gray-800'
 
     return (
         <nav className="bg-white p-3 w-60 rounded-md ml-2 my-4">
