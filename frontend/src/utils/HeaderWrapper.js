@@ -9,8 +9,15 @@ export default function HeaderWrapper() {
 
     if (!pathname) return null;
 
-    const hideHeaderOnRoutes = ["/admin/users/create"];
-    const showHeader = !hideHeaderOnRoutes.includes(pathname);
+    const shouldHideHeader = pathname.startsWith("/admin/users/");
 
-    return showHeader ? <AdminNavHeader/> : <div className="flex items-center px-6 mt-4"><AdminBreadcrumbs/></div>;
-        }
+    return shouldHideHeader ? (
+        <div className="flex items-center px-6 mt-4">
+            <AdminBreadcrumbs/>
+        </div>
+    ) : (
+        <AdminNavHeader/>
+    );
+}
+
+

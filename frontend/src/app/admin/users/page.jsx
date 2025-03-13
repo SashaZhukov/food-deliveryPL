@@ -54,7 +54,7 @@ export default async function Page() {
                         <td className="text-start font-light text-base">{item.first_name} {item.last_name}</td>
                         <td className="text-start font-light text-base">{item.role.name}</td>
                         <td className="text-green-500 font-light text-base hover:text-orange-500">
-                            <Link href="">More...</Link>
+                            <Link href={`/admin/users/${item.id}`}>More...</Link>
                         </td>
                     </tr>
                 ))}

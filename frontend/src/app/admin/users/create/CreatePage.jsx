@@ -2,7 +2,7 @@
 
 import React, {useState} from "react";
 import {toast} from "react-hot-toast";
-import {redirect, useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function CreatePage({ token }){
     const [formData, setFormData] = useState({
