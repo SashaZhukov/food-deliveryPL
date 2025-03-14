@@ -31,9 +31,7 @@ class UserController extends Controller
 
     public function getUsers(): JsonResponse
     {
-        $users = Cache::remember('users', 3600, function () {
-            return User::with('role')->orderBy('id', 'asc')->get();
-        });
+        $users = User::with('role')->get();
 
         return response()->json($users);
     }
@@ -105,5 +103,18 @@ class UserController extends Controller
         }
 
         return response()->json(['message' => $result['success']], 200);
+    }
+
+    public function deleteUser($id): JsonResponse
+    {
+        $user = User::where('id', $id);
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $user->delete();
+
+        return response()->json(['message' => 'User successfully deleted'], 200);
     }
 }

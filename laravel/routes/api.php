@@ -18,6 +18,7 @@ Route::prefix('/admin')->group(function () {
     Route::post('/users/create', [UserController::class, 'addUser']);
     Route::get('/users/{id}', [UserController::class, 'getUserForView']);
     Route::post('/forgot-password', [UserController::class, 'sendResetLinkEmail']);
+    Route::get('/users/{id}/delete', [UserController::class, 'deleteUser']);
 })->middleware([RoleMiddleware::class, 'auth:sanctum']);
 
 Route::get('/check-user-for-reset', [UserController::class, 'checkUserForReset']);

@@ -3,6 +3,8 @@ import {toast} from "react-hot-toast";
 import {useState} from "react";
 import { RxCross2 } from "react-icons/rx";
 import RedButton from "../../../../components/ui/RedButton";
+import { useRouter } from "next/navigation";
+import config from "../../../../config";
 
 export default function UserView({ user = null, roles = null, errors = null, token}) {
     if (errors) {
@@ -23,6 +25,7 @@ export default function UserView({ user = null, roles = null, errors = null, tok
         ]);
 
         const [editField, setEditField] = useState(null)
+        const router = useRouter();
         const handleToggleEdit = (FieldName) => {
             if (editField && editField !== FieldName) {
                 toast.error("Finish editing the current field first!")
@@ -60,7 +63,7 @@ export default function UserView({ user = null, roles = null, errors = null, tok
             }
 
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/users/${user.id}/update`, {
+                const response = await fetch(`${config.API_URL}/api/admin/users/${user.id}/update`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -112,6 +115,33 @@ export default function UserView({ user = null, roles = null, errors = null, tok
 
             } catch (error) {
 
+            }
+        }
+
+        const deleteUser = async (event) => {
+            event.preventDefault();
+
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/users/${user.id}/delete`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    credentials: 'include',
+                });
+
+                const data = await response.json()
+
+                if (response.status === 200) {
+                    router.push('/admin/users')
+                    toast.success(data.message)
+                } else {
+                    toast.error(data.message)
+                }
+            } catch (error) {
+                toast.error(error.message)
             }
         }
 
@@ -235,7 +265,7 @@ export default function UserView({ user = null, roles = null, errors = null, tok
                                 <hr className="absolute left-0 right-0 top-1/2 transform -translate-y-1/2 border-gray-200"/>
                             </div>
                         </div>
-                        <div className="mt-3">
+                        <div className="mt-3" onClick={deleteUser}>
                             <RedButton label={'User delete'}/>
                         </div>
                     </div>
